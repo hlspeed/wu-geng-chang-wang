@@ -26,15 +26,52 @@
             flex-direction: column;
             width: 48%;
         }
-        input {
+        .input-with-buttons {
+            display: flex;
+            align-items: center;
             margin: 5px 0;
+        }
+        input {
             padding: 10px;
-            font-size: 16px; /* 放大字體 */
+            font-size: 16px;
+            flex-grow: 1;
+        }
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .button-group {
+            display: flex;
+            gap: 5px;
+        }
+        .add-button, .remove-button {
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4e79a7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+        .add-button {
+            background-color: #4e79a7;
+        }
+        .add-button:hover {
+            background-color: #3a5f8a;
+        }
+        .remove-button {
+            background-color: #e15759;
+        }
+        .remove-button:hover {
+            background-color: #c13739;
         }
         button {
             margin-top: 20px;
             padding: 12px 24px;
-            font-size: 18px; /* 放大按鈕字體 */
+            font-size: 18px;
             cursor: pointer;
             background-color: #4e79a7;
             color: white;
@@ -67,13 +104,13 @@
             width: 18%;
             min-width: 150px;
             box-sizing: border-box;
-            font-size: 16px; /* 放大結果字體 */
+            font-size: 16px;
         }
         .group h4 {
             margin-top: 0;
             border-bottom: 1px solid #ccc;
             padding-bottom: 5px;
-            font-size: 18px; /* 放大組別標題 */
+            font-size: 18px;
         }
         .card {
             border: 2px dashed #888;
@@ -93,12 +130,12 @@
         }
         .binding-inputs select {
             padding: 8px;
-            font-size: 16px; /* 放大下拉選單字體 */
+            font-size: 16px;
         }
         .binding-inputs select[multiple] {
             height: 150px;
             min-width: 180px;
-            font-size: 16px; /* 放大選擇框字體 */
+            font-size: 16px;
         }
         .binding-tags {
             display: flex;
@@ -110,7 +147,7 @@
             color: white;
             padding: 8px 12px;
             border-radius: 8px;
-            font-size: 16px; /* 放大標籤字體 */
+            font-size: 16px;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -125,7 +162,7 @@
             font-size: 16px;
         }
         h2, h3 {
-            font-size: 20px; /* 放大標題字體 */
+            font-size: 20px;
         }
         @media (max-width: 768px) {
             .container {
@@ -143,7 +180,7 @@
                 align-items: stretch;
             }
             input, select, button {
-                font-size: 18px; /* 在手機上更進一步放大字體 */
+                font-size: 18px;
                 padding: 12px;
             }
             .binding-tag {
@@ -156,41 +193,81 @@
     <h1>華一江排球團</h1>
     <h1>抽籤分組程式</h1>
     <div class="container">
-        <div class="column">
-            <h2>女生</h2>
-            <input type="text" class="female" value="依芸" oninput="updatePersonSelect()">
-            <input type="text" class="female" value="小育" oninput="updatePersonSelect()">
-            <input type="text" class="female" value="阿禪" oninput="updatePersonSelect()">
-            <input type="text" class="female" value="廖禎" oninput="updatePersonSelect()">
-            <input type="text" class="female" value="小霏" oninput="updatePersonSelect()">
-            <input type="text" class="female" value="小美" oninput="updatePersonSelect()">
-            <input type="text" class="female" value="Amber" oninput="updatePersonSelect()">
-            <input type="text" class="female" value="蕭魚" oninput="updatePersonSelect()">
-            <input type="text" class="female" value="婕妤" oninput="updatePersonSelect()">
-            <input type="text" class="female" value="蛋餅" oninput="updatePersonSelect()">
-            <input type="text" class="female" placeholder="女生姓名11" oninput="updatePersonSelect()">
-            <input type="text" class="female" placeholder="女生姓名12" oninput="updatePersonSelect()">
-            <input type="text" class="female" placeholder="女生姓名13" oninput="updatePersonSelect()">
-            <input type="text" class="female" placeholder="女生姓名14" oninput="updatePersonSelect()">
-            <input type="text" class="female" placeholder="女生姓名15" oninput="updatePersonSelect()">
+        <div class="column" id="female-column">
+            <div class="column-header">
+                <h2>女生</h2>
+                <div class="button-group">
+                    <button class="add-button" onclick="addPerson('female')" title="新增">+</button>
+                    <button class="remove-button" onclick="removePerson('female')" title="刪除">-</button>
+                </div>
+            </div>
+            <div id="female-container">
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="依芸" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="小育" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="阿禪" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="廖禎" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="小霏" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="小美" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="Amber" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="蕭魚" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="婕妤" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="蛋餅" oninput="updatePersonSelect()">
+                </div>
+            </div>
         </div>
-        <div class="column">
-            <h2>男生</h2>
-            <input type="text" class="male" value="品客" oninput="updatePersonSelect()">
-            <input type="text" class="male" value="J翰" oninput="updatePersonSelect()">
-            <input type="text" class="male" value="Ian" oninput="updatePersonSelect()">
-            <input type="text" class="male" value="瑪莉" oninput="updatePersonSelect()">
-            <input type="text" class="male" value="蚊子" oninput="updatePersonSelect()">
-            <input type="text" class="male" value="子森" oninput="updatePersonSelect()">
-            <input type="text" class="male" value="大腸" oninput="updatePersonSelect()">
-            <input type="text" class="male" value="節哥" oninput="updatePersonSelect()">
-            <input type="text" class="male" placeholder="男生姓名9" oninput="updatePersonSelect()">
-            <input type="text" class="male" placeholder="男生姓名10" oninput="updatePersonSelect()">
-            <input type="text" class="male" placeholder="男生姓名11" oninput="updatePersonSelect()">
-            <input type="text" class="male" placeholder="男生姓名12" oninput="updatePersonSelect()">
-            <input type="text" class="male" placeholder="男生姓名13" oninput="updatePersonSelect()">
-            <input type="text" class="male" placeholder="男生姓名14" oninput="updatePersonSelect()">
-            <input type="text" class="male" placeholder="男生姓名15" oninput="updatePersonSelect()">
+        <div class="column" id="male-column">
+            <div class="column-header">
+                <h2>男生</h2>
+                <div class="button-group">
+                    <button class="add-button" onclick="addPerson('male')" title="新增">+</button>
+                    <button class="remove-button" onclick="removePerson('male')" title="刪除">-</button>
+                </div>
+            </div>
+            <div id="male-container">
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="品客" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="J翰" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="Ian" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="瑪莉" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="蚊子" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="子森" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="大腸" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="節哥" oninput="updatePersonSelect()">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -224,6 +301,32 @@
                 [array[i], array[j]] = [array[j], array[i]];
             }
             return array;
+        }
+
+        function addPerson(gender) {
+            const container = document.getElementById(`${gender}-container`);
+            const count = container.childElementCount + 1;
+            const div = document.createElement('div');
+            div.className = 'input-with-buttons';
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = gender;
+            input.placeholder = `${gender === 'female' ? '女生' : '男生'}姓名${count}`;
+            input.oninput = updatePersonSelect;
+            
+            div.appendChild(input);
+            container.appendChild(div);
+            
+            updatePersonSelect();
+        }
+
+        function removePerson(gender) {
+            const container = document.getElementById(`${gender}-container`);
+            if (container.childElementCount > 1) {
+                container.removeChild(container.lastChild);
+                updatePersonSelect();
+            }
         }
 
         function updatePersonSelect() {
@@ -296,6 +399,7 @@
             
             const groups = { A: [], B: [], C: [], D: [], E: [], F: [] };
             const assigned = new Set();
+            const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
 
             // Step 1: Process special bindings first
             for (const bind of lockedGroups) {
@@ -308,15 +412,33 @@
                 }
             }
 
-            // Step 2: Distribute remaining females evenly
-            const remainingFemales = females.filter(name => !assigned.has(name));
-            shuffle(remainingFemales);
+            // Step 2: Find which people are already assigned from the special bindings
+            const allFemalesAssigned = females.filter(name => assigned.has(name));
+            const allMalesAssigned = males.filter(name => assigned.has(name));
             
-            // Distribute females round-robin style to groups A through F
-            const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
+            // Count how many males are in each group from the special bindings
+            const malesInGroups = {};
+            for (const group of groupOrder) {
+                malesInGroups[group] = groups[group].filter(name => males.includes(name)).length;
+            }
+
+            // Step 3: Distribute remaining males to ensure at least one male per group if possible
+            const remainingMales = males.filter(name => !assigned.has(name));
+            shuffle(remainingMales);
+            
+            // First, prioritize groups with no males
+            for (const group of groupOrder) {
+                if (malesInGroups[group] === 0 && remainingMales.length > 0) {
+                    const male = remainingMales.shift();
+                    groups[group].push(male);
+                    assigned.add(male);
+                    malesInGroups[group]++;
+                }
+            }
+            
+            // Step 4: Distribute any remaining males evenly
             let groupIndex = 0;
-            
-            remainingFemales.forEach(person => {
+            remainingMales.forEach(male => {
                 // Find next available group in sequence
                 let initialIndex = groupIndex;
                 let found = false;
@@ -326,8 +448,8 @@
                     const targetGroup = groupOrder[groupIndex];
                     // Add to group if not already maxed out (3 people)
                     if (groups[targetGroup].length < 3) {
-                        groups[targetGroup].push(person);
-                        assigned.add(person);
+                        groups[targetGroup].push(male);
+                        assigned.add(male);
                         found = true;
                     }
                     // Move to next group, wrap around if needed
@@ -338,14 +460,14 @@
                 }
             });
 
-            // Step 3: Distribute remaining males evenly
-            const remainingMales = males.filter(name => !assigned.has(name));
-            shuffle(remainingMales);
+            // Step 5: Now distribute remaining females evenly
+            const remainingFemales = females.filter(name => !assigned.has(name));
+            shuffle(remainingFemales);
             
             // Reset group index to start from A again
             groupIndex = 0;
             
-            remainingMales.forEach(person => {
+            remainingFemales.forEach(female => {
                 // Find next available group in sequence
                 let initialIndex = groupIndex;
                 let found = false;
@@ -355,8 +477,8 @@
                     const targetGroup = groupOrder[groupIndex];
                     // Add to group if not already maxed out (3 people)
                     if (groups[targetGroup].length < 3) {
-                        groups[targetGroup].push(person);
-                        assigned.add(person);
+                        groups[targetGroup].push(female);
+                        assigned.add(female);
                         found = true;
                     }
                     // Move to next group, wrap around if needed
@@ -367,9 +489,8 @@
                 }
             });
 
-            // Step 4: Distribute any remaining people to groups with space
-            const remainingPeople = [...females, ...males].filter(name => !assigned.has(name));
-            shuffle(remainingPeople);
+            // Step 6: Handle any remaining people (should be rare but just in case)
+            const remainingPeople = [...remainingMales, ...remainingFemales].filter(name => !assigned.has(name));
             
             remainingPeople.forEach(person => {
                 // Find group with fewest members
