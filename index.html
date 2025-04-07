@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>五更常旺說好話讀好書排球團抽籤分組程式</title>
+    <title>華一江排球團抽籤分組程式</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,7 +52,7 @@
         }
         .group {
             margin: 10px;
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
             width: 18%;
@@ -64,19 +64,65 @@
             border-bottom: 1px solid #ccc;
             padding-bottom: 5px;
         }
+        .card {
+            border: 2px dashed #888;
+            padding: 15px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 800px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+        }
+        .binding-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .binding-inputs select[multiple] {
+            height: 120px;
+            min-width: 160px;
+            font-size: 14px;
+        }
+        .binding-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .binding-tag {
+            background-color: #4e79a7;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .binding-tag button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
         @media (max-width: 768px) {
-            .groups-container {
+            .container {
                 flex-direction: column;
                 align-items: center;
             }
             .group {
                 width: 80%;
             }
+            .binding-inputs {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>五更常旺說好話讀好書排球團</h1>
+    <h1>華一江排球團</h1>
     <h1>抽籤分組程式</h1>
     <div class="container">
         <div class="column">
@@ -85,12 +131,12 @@
             <input type="text" class="female" value="小育">
             <input type="text" class="female" value="阿禪">
             <input type="text" class="female" value="廖禎">
-            <input type="text" class="female" value="京盈">
+            <input type="text" class="female" value="小霏">
             <input type="text" class="female" value="小美">
             <input type="text" class="female" value="Amber">
             <input type="text" class="female" value="蕭魚">
-            <input type="text" class="female" placeholder="女生姓名9">
-            <input type="text" class="female" placeholder="女生姓名10">
+            <input type="text" class="female" value="婕妤">
+            <input type="text" class="female" value="蛋餅">
             <input type="text" class="female" placeholder="女生姓名11">
             <input type="text" class="female" placeholder="女生姓名12">
             <input type="text" class="female" placeholder="女生姓名13">
@@ -101,12 +147,12 @@
             <h2>男生</h2>
             <input type="text" class="male" value="品客">
             <input type="text" class="male" value="J翰">
-            <input type="text" class="male" value="銀狼">
+            <input type="text" class="male" value="Ian">
             <input type="text" class="male" value="瑪莉">
             <input type="text" class="male" value="蚊子">
             <input type="text" class="male" value="子森">
-            <input type="text" class="male" value="17">
-            <input type="text" class="male" placeholder="男生姓名8">
+            <input type="text" class="male" value="大腸">
+            <input type="text" class="male" value="節哥">
             <input type="text" class="male" placeholder="男生姓名9">
             <input type="text" class="male" placeholder="男生姓名10">
             <input type="text" class="male" placeholder="男生姓名11">
@@ -116,10 +162,31 @@
             <input type="text" class="male" placeholder="男生姓名15">
         </div>
     </div>
+
+    <!-- 特殊分組設定 -->
+    <div id="special-binding" class="card">
+        <h3>🎯 特殊分組設定</h3>
+        <div class="binding-inputs">
+            <select id="person-select" multiple></select>
+            <select id="group-select">
+                <option value="A">A 組</option>
+                <option value="B">B 組</option>
+                <option value="C">C 組</option>
+                <option value="D">D 組</option>
+                <option value="E">E 組</option>
+                <option value="F">F 組</option>
+            </select>
+            <button onclick="addBinding()">➕ 新增綁定</button>
+        </div>
+        <div id="binding-tags" class="binding-tags"></div>
+    </div>
+
     <button onclick="startLottery()">開始抽籤分組</button>
     <div id="result"></div>
 
     <script>
+        let lockedGroups = [];
+
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -128,61 +195,157 @@
             return array;
         }
 
-        function startLottery() {
-            const females = Array.from(document.querySelectorAll('.female'))
-                .map(input => input.value.trim())
-                .filter(name => name !== '');
-            const males = Array.from(document.querySelectorAll('.male'))
-                .map(input => input.value.trim())
-                .filter(name => name !== '');
+        function updatePersonSelect() {
+            const inputs = [...document.querySelectorAll('.female'), ...document.querySelectorAll('.male')];
+            const select = document.getElementById('person-select');
+            select.innerHTML = '';
+            const uniqueNames = [...new Set(inputs.map(i => i.value.trim()).filter(n => n))];
+            for (const name of uniqueNames) {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                select.appendChild(opt);
+            }
+        }
 
-            if (females.length === 0 && males.length === 0) {
-                alert('請至少輸入一個名字！');
+        function addBinding() {
+            const select = document.getElementById('person-select');
+            const group = document.getElementById('group-select').value;
+            const selected = Array.from(select.selectedOptions).map(opt => opt.value).filter(n => n);
+            if (selected.length === 0) {
+                alert('請至少選擇一個人來指定分組！');
                 return;
             }
+            lockedGroups.push({ members: selected, group });
+            renderBindings();
+        }
 
-            const groups = {
-                A: [], B: [], C: [], D: [], E: []
-            };
-            const groupNames = Object.keys(groups);
+        function renderBindings() {
+            const container = document.getElementById('binding-tags');
+            container.innerHTML = '';
+            lockedGroups.forEach((binding, idx) => {
+                const tag = document.createElement('div');
+                tag.className = 'binding-tag';
+                tag.innerHTML = `[${binding.members.join(', ')}] → ${binding.group} 組 <button onclick="removeBinding(${idx})">❌</button>`;
+                container.appendChild(tag);
+            });
+        }
 
-            // 第一輪：女生抽籤
-            shuffle(females);
-            for (let i = 0; i < Math.min(5, females.length); i++) {
-                groups[groupNames[i]].push(females[i]);
+        function removeBinding(index) {
+            lockedGroups.splice(index, 1);
+            renderBindings();
+        }
+
+        function startLottery() {
+            updatePersonSelect();
+
+            // Get all names from inputs
+            let females = Array.from(document.querySelectorAll('.female')).map(i => i.value.trim()).filter(n => n);
+            let males = Array.from(document.querySelectorAll('.male')).map(i => i.value.trim()).filter(n => n);
+            
+            const groups = { A: [], B: [], C: [], D: [], E: [], F: [] };
+            const assigned = new Set();
+
+            // Step 1: Process special bindings first
+            for (const bind of lockedGroups) {
+                const groupList = groups[bind.group];
+                for (const name of bind.members) {
+                    if (!assigned.has(name)) {
+                        groupList.push(name);
+                        assigned.add(name);
+                    }
+                }
             }
 
-            // 第二輪：男生抽籤
-            shuffle(males);
-            for (let i = 0; i < Math.min(5, males.length); i++) {
-                groups[groupNames[i]].push(males[i]);
-            }
-
-            // 第三輪：剩餘人員隨機分配
-            const remainingFemales = females.slice(5);
-            const remainingMales = males.slice(5);
-            const remaining = shuffle([...remainingFemales, ...remainingMales]);
-
+            // Step 2: Distribute remaining females evenly
+            const remainingFemales = females.filter(name => !assigned.has(name));
+            shuffle(remainingFemales);
+            
+            // Distribute females round-robin style to groups A through F
+            const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
             let groupIndex = 0;
-            for (const person of remaining) {
-                groups[groupNames[groupIndex]].push(person);
-                groupIndex = (groupIndex + 1) % 5;
-            }
+            
+            remainingFemales.forEach(person => {
+                // Find next available group in sequence
+                let initialIndex = groupIndex;
+                let found = false;
+                
+                // Try all groups in sequence, starting from current index
+                while (!found) {
+                    const targetGroup = groupOrder[groupIndex];
+                    // Add to group if not already maxed out (3 people)
+                    if (groups[targetGroup].length < 3) {
+                        groups[targetGroup].push(person);
+                        assigned.add(person);
+                        found = true;
+                    }
+                    // Move to next group, wrap around if needed
+                    groupIndex = (groupIndex + 1) % groupOrder.length;
+                    
+                    // If we've tried all groups and none have space, break
+                    if (groupIndex === initialIndex) break;
+                }
+            });
 
-            // 顯示結果
+            // Step 3: Distribute remaining males evenly
+            const remainingMales = males.filter(name => !assigned.has(name));
+            shuffle(remainingMales);
+            
+            // Reset group index to start from A again
+            groupIndex = 0;
+            
+            remainingMales.forEach(person => {
+                // Find next available group in sequence
+                let initialIndex = groupIndex;
+                let found = false;
+                
+                // Try all groups in sequence, starting from current index
+                while (!found) {
+                    const targetGroup = groupOrder[groupIndex];
+                    // Add to group if not already maxed out (3 people)
+                    if (groups[targetGroup].length < 3) {
+                        groups[targetGroup].push(person);
+                        assigned.add(person);
+                        found = true;
+                    }
+                    // Move to next group, wrap around if needed
+                    groupIndex = (groupIndex + 1) % groupOrder.length;
+                    
+                    // If we've tried all groups and none have space, break
+                    if (groupIndex === initialIndex) break;
+                }
+            });
+
+            // Step 4: Distribute any remaining people to groups with space
+            const remainingPeople = [...females, ...males].filter(name => !assigned.has(name));
+            shuffle(remainingPeople);
+            
+            remainingPeople.forEach(person => {
+                // Find group with fewest members
+                const targetGroup = Object.keys(groups).reduce((a, b) =>
+                    groups[a].length <= groups[b].length ? a : b
+                );
+                
+                if (groups[targetGroup].length < 3) {
+                    groups[targetGroup].push(person);
+                    assigned.add(person);
+                }
+            });
+
+            // Display results
             let resultHTML = '<h3>抽籤結果：</h3><div class="groups-container">';
             for (const [groupName, members] of Object.entries(groups)) {
                 resultHTML += `
                     <div class="group">
                         <h4>第${groupName}組</h4>
-                        <p>${members.join(' ')}</p>
-                    </div>
-                `;
+                        <p>${members.join('<br>')}</p>
+                    </div>`;
             }
             resultHTML += '</div>';
-
             document.getElementById('result').innerHTML = resultHTML;
         }
+
+        window.onload = updatePersonSelect;
     </script>
 </body>
 </html>
