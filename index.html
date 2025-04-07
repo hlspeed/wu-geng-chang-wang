@@ -24,16 +24,25 @@
         .column {
             display: flex;
             flex-direction: column;
+            width: 48%;
         }
         input {
             margin: 5px 0;
-            padding: 5px;
+            padding: 10px;
+            font-size: 16px; /* 放大字體 */
         }
         button {
             margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 12px 24px;
+            font-size: 18px; /* 放大按鈕字體 */
             cursor: pointer;
+            background-color: #4e79a7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #3a5f8a;
         }
         #result {
             margin-top: 20px;
@@ -58,11 +67,13 @@
             width: 18%;
             min-width: 150px;
             box-sizing: border-box;
+            font-size: 16px; /* 放大結果字體 */
         }
         .group h4 {
             margin-top: 0;
             border-bottom: 1px solid #ccc;
             padding-bottom: 5px;
+            font-size: 18px; /* 放大組別標題 */
         }
         .card {
             border: 2px dashed #888;
@@ -80,10 +91,14 @@
             align-items: center;
             margin-bottom: 10px;
         }
+        .binding-inputs select {
+            padding: 8px;
+            font-size: 16px; /* 放大下拉選單字體 */
+        }
         .binding-inputs select[multiple] {
-            height: 120px;
-            min-width: 160px;
-            font-size: 14px;
+            height: 150px;
+            min-width: 180px;
+            font-size: 16px; /* 放大選擇框字體 */
         }
         .binding-tags {
             display: flex;
@@ -93,9 +108,9 @@
         .binding-tag {
             background-color: #4e79a7;
             color: white;
-            padding: 5px 10px;
+            padding: 8px 12px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 16px; /* 放大標籤字體 */
             display: flex;
             align-items: center;
             gap: 5px;
@@ -105,11 +120,20 @@
             border: none;
             color: white;
             cursor: pointer;
+            margin: 0;
+            padding: 0 5px;
+            font-size: 16px;
+        }
+        h2, h3 {
+            font-size: 20px; /* 放大標題字體 */
         }
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
                 align-items: center;
+            }
+            .column {
+                width: 90%;
             }
             .group {
                 width: 80%;
@@ -117,6 +141,13 @@
             .binding-inputs {
                 flex-direction: column;
                 align-items: stretch;
+            }
+            input, select, button {
+                font-size: 18px; /* 在手機上更進一步放大字體 */
+                padding: 12px;
+            }
+            .binding-tag {
+                font-size: 18px;
             }
         }
     </style>
@@ -127,39 +158,39 @@
     <div class="container">
         <div class="column">
             <h2>女生</h2>
-            <input type="text" class="female" value="依芸">
-            <input type="text" class="female" value="小育">
-            <input type="text" class="female" value="阿禪">
-            <input type="text" class="female" value="廖禎">
-            <input type="text" class="female" value="小霏">
-            <input type="text" class="female" value="小美">
-            <input type="text" class="female" value="Amber">
-            <input type="text" class="female" value="蕭魚">
-            <input type="text" class="female" value="婕妤">
-            <input type="text" class="female" value="蛋餅">
-            <input type="text" class="female" placeholder="女生姓名11">
-            <input type="text" class="female" placeholder="女生姓名12">
-            <input type="text" class="female" placeholder="女生姓名13">
-            <input type="text" class="female" placeholder="女生姓名14">
-            <input type="text" class="female" placeholder="女生姓名15">
+            <input type="text" class="female" value="依芸" oninput="updatePersonSelect()">
+            <input type="text" class="female" value="小育" oninput="updatePersonSelect()">
+            <input type="text" class="female" value="阿禪" oninput="updatePersonSelect()">
+            <input type="text" class="female" value="廖禎" oninput="updatePersonSelect()">
+            <input type="text" class="female" value="小霏" oninput="updatePersonSelect()">
+            <input type="text" class="female" value="小美" oninput="updatePersonSelect()">
+            <input type="text" class="female" value="Amber" oninput="updatePersonSelect()">
+            <input type="text" class="female" value="蕭魚" oninput="updatePersonSelect()">
+            <input type="text" class="female" value="婕妤" oninput="updatePersonSelect()">
+            <input type="text" class="female" value="蛋餅" oninput="updatePersonSelect()">
+            <input type="text" class="female" placeholder="女生姓名11" oninput="updatePersonSelect()">
+            <input type="text" class="female" placeholder="女生姓名12" oninput="updatePersonSelect()">
+            <input type="text" class="female" placeholder="女生姓名13" oninput="updatePersonSelect()">
+            <input type="text" class="female" placeholder="女生姓名14" oninput="updatePersonSelect()">
+            <input type="text" class="female" placeholder="女生姓名15" oninput="updatePersonSelect()">
         </div>
         <div class="column">
             <h2>男生</h2>
-            <input type="text" class="male" value="品客">
-            <input type="text" class="male" value="J翰">
-            <input type="text" class="male" value="Ian">
-            <input type="text" class="male" value="瑪莉">
-            <input type="text" class="male" value="蚊子">
-            <input type="text" class="male" value="子森">
-            <input type="text" class="male" value="大腸">
-            <input type="text" class="male" value="節哥">
-            <input type="text" class="male" placeholder="男生姓名9">
-            <input type="text" class="male" placeholder="男生姓名10">
-            <input type="text" class="male" placeholder="男生姓名11">
-            <input type="text" class="male" placeholder="男生姓名12">
-            <input type="text" class="male" placeholder="男生姓名13">
-            <input type="text" class="male" placeholder="男生姓名14">
-            <input type="text" class="male" placeholder="男生姓名15">
+            <input type="text" class="male" value="品客" oninput="updatePersonSelect()">
+            <input type="text" class="male" value="J翰" oninput="updatePersonSelect()">
+            <input type="text" class="male" value="Ian" oninput="updatePersonSelect()">
+            <input type="text" class="male" value="瑪莉" oninput="updatePersonSelect()">
+            <input type="text" class="male" value="蚊子" oninput="updatePersonSelect()">
+            <input type="text" class="male" value="子森" oninput="updatePersonSelect()">
+            <input type="text" class="male" value="大腸" oninput="updatePersonSelect()">
+            <input type="text" class="male" value="節哥" oninput="updatePersonSelect()">
+            <input type="text" class="male" placeholder="男生姓名9" oninput="updatePersonSelect()">
+            <input type="text" class="male" placeholder="男生姓名10" oninput="updatePersonSelect()">
+            <input type="text" class="male" placeholder="男生姓名11" oninput="updatePersonSelect()">
+            <input type="text" class="male" placeholder="男生姓名12" oninput="updatePersonSelect()">
+            <input type="text" class="male" placeholder="男生姓名13" oninput="updatePersonSelect()">
+            <input type="text" class="male" placeholder="男生姓名14" oninput="updatePersonSelect()">
+            <input type="text" class="male" placeholder="男生姓名15" oninput="updatePersonSelect()">
         </div>
     </div>
 
@@ -205,6 +236,26 @@
                 opt.value = name;
                 opt.textContent = name;
                 select.appendChild(opt);
+            }
+            
+            // 檢查現有綁定中是否有人已從名單移除
+            let bindingsChanged = false;
+            lockedGroups = lockedGroups.filter(binding => {
+                // 只保留仍在名單中的人員
+                const validMembers = binding.members.filter(name => uniqueNames.includes(name));
+                if (validMembers.length !== binding.members.length) {
+                    bindingsChanged = true;
+                    if (validMembers.length === 0) {
+                        return false; // 如果所有成員都不在名單上，移除整個綁定
+                    }
+                    binding.members = validMembers; // 更新綁定成員列表
+                }
+                return true;
+            });
+            
+            // 如果有任何變更，重新渲染綁定標籤
+            if (bindingsChanged) {
+                renderBindings();
             }
         }
 
