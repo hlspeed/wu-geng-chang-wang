@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>華一江排球團抽籤分組程式</title>
+    <title>BWCL排球團抽籤分組程式</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -232,6 +232,9 @@
                 <div class="input-with-buttons">
                     <input type="text" class="female" value="Amber" oninput="updatePersonSelect()">
                 </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="花果" oninput="updatePersonSelect()">
+                </div>
             </div>
         </div>
         <div class="column" id="male-column">
@@ -257,7 +260,13 @@
                 </div>
                 <div class="input-with-buttons">
                     <input type="text" class="male" value="蚊子" oninput="updatePersonSelect()">
-                </div>               
+                </div> 
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="子森" oninput="updatePersonSelect()">
+                </div>  
+                 <div class="input-with-buttons">
+                    <input type="text" class="male" value="萬閎" oninput="updatePersonSelect()">
+                </div>     
             </div>
         </div>
     </div>
@@ -274,7 +283,7 @@
                 <option value="D">D 組</option>
                 <option value="E">E 組</option>
                 <!-- 要改回6組則把下面的F 組取消註解 -->
-                <!-- <option value="F">F 組</option> -->
+                <option value="F">F 組</option>
             </select>
             <button onclick="addBinding()">➕ 新增綁定</button>
         </div>
@@ -389,14 +398,14 @@
             let females = Array.from(document.querySelectorAll('.female')).map(i => i.value.trim()).filter(n => n);
             let males = Array.from(document.querySelectorAll('.male')).map(i => i.value.trim()).filter(n => n);
             
-            const groups = { A: [], B: [], C: [], D: [], E: [] };
-            const assigned = new Set();
-            const groupOrder = ['A', 'B', 'C', 'D', 'E'];
+            <!-- const groups = { A: [], B: [], C: [], D: [], E: [] }; -->
+            <!-- const assigned = new Set(); -->
+            <!-- const groupOrder = ['A', 'B', 'C', 'D', 'E']; -->
             
             <!-- 要改回6組則把下面的三行取消註解，並把上面三行註解 -->
-            <!-- const groups = { A: [], B: [], C: [], D: [], E: [], F: [] }; -->
-            <!-- const assigned = new Set(); -->
-            <!-- const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F']; -->
+            const groups = { A: [], B: [], C: [], D: [], E: [], F: [] };
+            const assigned = new Set();
+            const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
                 
             // Step 1: Process special bindings first
             for (const bind of lockedGroups) {
